@@ -1,12 +1,12 @@
 ﻿module TabuSearch
 
-let neighborhoodSize = 150
+let neighborhoodSize = 30
 
 let rec doSearch tabuList maxTabuSize sBest sCandidate stoppingCond neighborGenerator sNeighborhood fitnessEvaluator =
     if stoppingCond sBest then sBest
     else
         let rec buildNeighborhood item acc =
-            if (List.length acc) >= neighborhoodSize then acc else (buildNeighborhood sCandidate ((neighborGenerator sCandidate) :: acc))
+            if (List.length acc) >= neighborhoodSize then acc else buildNeighborhood ((neighborGenerator sCandidate) :: acc)
         let neighborhood = buildNeighborhood sCandidate []
         let evaluateCandidate best candidate =
             if ((not (List.contains candidate tabuList)) && ((fitnessEvaluator candidate) > (fitnessEvaluator best))) then candidate

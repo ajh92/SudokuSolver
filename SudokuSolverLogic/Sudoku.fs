@@ -76,12 +76,13 @@ let getScore board =
   in
   List.sum (buildScoreList [] [0 .. (Array2D.length1 board) - 1])
 
-let makeGuess board  =
-  let x = random.Next (Array2D.length1 board) in
-  let y = random.Next (Array2D.length1 board) in
-  let currentGuess = random.Next(1, (Array2D.length1 board) + 1) in
-  let cell = board.[x,y] in
+let rec makeGuess board  =
+  let newBoard = Array2D.copy board
+  let x = random.Next (Array2D.length1 newBoard) in
+  let y = random.Next (Array2D.length1 newBoard) in
+  let currentGuess = random.Next(1, (Array2D.length1 newBoard) + 1) in
+  let cell = newBoard.[x,y] in
   match cell with
-    | Some (Given _) -> board
-    | None | Some (Guess _) -> board.[x,y] <- Some (Guess currentGuess); board;
+    | Some (Given _) -> makeGuess board
+    | None | Some (Guess _) -> newBoard.[x,y] <- Some (Guess currentGuess); newBoard;
 

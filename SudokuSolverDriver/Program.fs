@@ -6,15 +6,16 @@ open TabuSearch
 [<EntryPoint>]
 let main argv = 
     let result =
-        let startingBoard = Array2D.create 4 4 None
+        let startingBoard = Array2D.create 9 9 None
         in
         doSearch
           []
-          40000
+          350
           startingBoard
           startingBoard
           (fun board -> (getScore board) = 0)
-          (fun board -> (makeGuess board) :: [])
+          (fun board -> makeGuess board)
+          []
           (fun board -> -1 * (getScore board))
 
     printfn "%A" result
